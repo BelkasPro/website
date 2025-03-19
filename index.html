@@ -69,17 +69,17 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 35px; /* Измененная высота панели задач */
-            background: #0f0f0f; /* Темный цвет панели задач */
+            height: 35px;
+            background: #0f0f0f;
             display: flex;
             align-items: center;
             padding: 0 10px;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
         }
         .taskbar .app-icon {
-            width: 25px; /* Ширина иконок приложений */
-            height: 25px; /* Высота иконок приложений */
-            background: #252525; /* Темный цвет иконок приложений */
+            width: 25px;
+            height: 25px;
+            background: #252525;
             border-radius: 5px;
             margin-right: 5px;
             display: flex;
@@ -89,13 +89,13 @@
             cursor: pointer;
         }
         .start-button {
-            width: 25px; /* Ширина кнопки "Пуск" */
-            height: 25px; /* Высота кнопки "Пуск" */
-            background: url('img/taskbar.png') no-repeat center center; /* Фоновое изображение */
-            background-size: contain; /* Масштабирование изображения */
-            margin-right: 10px; /* Отступ справа */
-            cursor: pointer; /* Курсор при наведении */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Добавление тени */
+            width: 25px;
+            height: 25px;
+            background: url('img/taskbar.png') no-repeat center center;
+            background-size: contain;
+            margin-right: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         }
         .footer {
             position: absolute;
@@ -121,12 +121,12 @@
         </div>
     </div>
     <div class="taskbar">
-        <div class="start-button"></div> <!-- Кнопка "Пуск" -->
+        <div class="start-button"></div>
         <div class="app-icon">📁</div>
         <div class="app-icon">⚙️</div>
         <div class="app-icon">🌐</div>
     </div>
-    <div class="footer" id="footer">моё время (UTC+3)</div> <!-- Измененный текст -->
+    <div class="footer" id="footer">my time (UTC+3)</div>
     <script>
         const windowElement = document.getElementById("window");
         const titleBar = document.getElementById("title-bar");
@@ -134,7 +134,6 @@
         let isDragging = false;
         let offsetX, offsetY;
 
-        // Устанавливаем начальные координаты окна
         const startX = window.innerWidth / 2 - 200;
         const startY = window.innerHeight / 2 - 100;
         windowElement.style.left = `${startX}px`;
@@ -157,7 +156,6 @@
                 const newX = e.clientX - offsetX;
                 const newY = e.clientY - offsetY;
 
-                // Устанавливаем новые координаты окна
                 windowElement.style.left = `${newX}px`;
                 windowElement.style.top = `${newY}px`;
             }
@@ -178,7 +176,6 @@
         const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
         document.body.style.background = `url('${randomBg}') no-repeat center center/cover`;
 
-        // Функция для обновления времени
         function updateTime() {
             const now = new Date();
             const options = { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit' };
@@ -186,9 +183,8 @@
             footer.textContent = `${timeString}`;
         }
 
-        // Обновляем время каждую секунду
         setInterval(updateTime, 1000);
-        updateTime(); // Первоначальный вызов
+        updateTime();
     </script>
 </body>
 </html>
