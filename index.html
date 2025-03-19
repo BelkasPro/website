@@ -69,24 +69,33 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 40px;
-            background: #333;
+            height: 35px; /* Измененная высота панели задач */
+            background: #0f0f0f; /* Темный цвет панели задач */
             display: flex;
             align-items: center;
             padding: 0 10px;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
         }
         .taskbar .app-icon {
-            width: 30px;
-            height: 30px;
-            background: #555;
+            width: 25px; /* Ширина иконок приложений */
+            height: 25px; /* Высота иконок приложений */
+            background: #252525; /* Темный цвет иконок приложений */
             border-radius: 5px;
-            margin-right: 10px;
+            margin-right: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #fff;
             cursor: pointer;
+        }
+        .start-button {
+            width: 25px; /* Ширина кнопки "Пуск" */
+            height: 25px; /* Высота кнопки "Пуск" */
+            background: url('img/taskbar.png') no-repeat center center; /* Фоновое изображение */
+            background-size: contain; /* Масштабирование изображения */
+            margin-right: 10px; /* Отступ справа */
+            cursor: pointer; /* Курсор при наведении */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Добавление тени */
         }
         .footer {
             position: absolute;
@@ -112,20 +121,22 @@
         </div>
     </div>
     <div class="taskbar">
-        <div class="app-icon">☀️</div>
+        <div class="start-button"></div> <!-- Кнопка "Пуск" -->
         <div class="app-icon">📁</div>
-        <div class="app-icon">🌐</div>
         <div class="app-icon">⚙️</div>
+        <div class="app-icon">🌐</div>
     </div>
-    <div class="footer">Made by BelkaPRO</div>
+    <div class="footer" id="footer">моё время (UTC+3)</div> <!-- Измененный текст -->
     <script>
         const windowElement = document.getElementById("window");
         const titleBar = document.getElementById("title-bar");
+        const footer = document.getElementById("footer");
         let isDragging = false;
         let offsetX, offsetY;
-        let startX = window.innerWidth / 2 - 200;
-        let startY = window.innerHeight / 2 - 100;
 
+        // Устанавливаем начальные координаты окна
+        const startX = window.innerWidth / 2 - 200;
+        const startY = window.innerHeight / 2 - 100;
         windowElement.style.left = `${startX}px`;
         windowElement.style.top = `${startY}px`;
 
@@ -143,8 +154,12 @@
 
         function onMouseMove(e) {
             if (isDragging) {
-                windowElement.style.left = `${e.clientX - offsetX}px`;
-                windowElement.style.top = `${e.clientY - offsetY}px`;
+                const newX = e.clientX - offsetX;
+                const newY = e.clientY - offsetY;
+
+                // Устанавливаем новые координаты окна
+                windowElement.style.left = `${newX}px`;
+                windowElement.style.top = `${newY}px`;
             }
         }
 
@@ -162,6 +177,18 @@
         const backgrounds = ["img/1.png", "img/2.png", "img/3.png", "img/4.png"];
         const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
         document.body.style.background = `url('${randomBg}') no-repeat center center/cover`;
+
+        // Функция для обновления времени
+        function updateTime() {
+            const now = new Date();
+            const options = { timeZone: 'Europe/Moscow', hour: '2-digit', minute: '2-digit' };
+            const timeString = new Intl.DateTimeFormat('ru-RU', options).format(now);
+            footer.textContent = `${timeString}`;
+        }
+
+        // Обновляем время каждую секунду
+        setInterval(updateTime, 1000);
+        updateTime(); // Первоначальный вызов
     </script>
 </body>
 </html>
