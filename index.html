@@ -44,17 +44,23 @@
             align-items: center;
             padding: 10px;
             background: #333;
-            cursor: grab;
+            cursor: default;
+        }
+        .content {
+            margin: 10px 0;
         }
         .buttons {
             display: flex;
-            gap: 8px;
+            justify-content: flex-end;
         }
         .btn {
             width: 12px;
             height: 12px;
             border-radius: 50%;
+            margin-left: 5px;
+            cursor: pointer;
         }
+        
         .btn.red { background: #ff5f57; }
         .btn.yellow { background: #ffbd2e; }
         .btn.green { background: #28c840; }
@@ -96,6 +102,21 @@
             margin-right: 10px;
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s ease;
+        }
+        .start-button.bounce {
+            animation: bounce 0.2s;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
         }
         .footer {
             position: absolute;
@@ -104,6 +125,60 @@
             color: #fff;
             font-size: 12px;
             opacity: 0.7;
+        }
+        .start-menu {
+            position: absolute;
+            bottom: 35px;
+            left: 10px;
+            width: 250px;
+            background: #1e1e1e;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 20;
+            padding: 10px;
+            transition: transform 0.3s ease;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: url('img/usr.png') no-repeat center center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            background-size: cover;
+            margin-right: 10px;
+        }
+        .user-name {
+            color: #ddd;
+            font-size: 14px;
+        }
+        .menu-item {
+            padding: 10px;
+            color: #ddd;
+            cursor: pointer;
+        }
+        .menu-item:hover {
+            background: rgba(30,30,30, 0.1);
+        }
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 5px 0;
+        }
+        .language-label {
+            display: inline-block;
+            background: #1e1e1e;
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: auto;
+            margin-right: 35px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -116,24 +191,44 @@
                 <div class="btn green"></div>
             </div>
         </div>
-        <div class="content">
+        <div class="content" id="content">
             Hello user, I see that you have visited my site. It is empty for now, but I will update it in the future. Good luck
         </div>
     </div>
     <div class="taskbar">
-        <div class="start-button"></div>
+        <div class="start-button" id="start-button"></div>
         <div class="app-icon">📁</div>
         <div class="app-icon">⚙️</div>
         <div class="app-icon">🌐</div>
+        <div class="language-label">ENG</div>
+    </div>
+    <div class="start-menu" id="start-menu">
+        <div class="user-info">
+            <div class="user-avatar"></div>
+            <div class="user-name">User</div>
+        </div>
+        <div class="divider"></div>
+        <div class="menu-item">Programs</div>
+        <div class="menu-item">Settings</div>
+        <div class="menu-item">Log Out</div>
     </div>
     <div class="footer" id="footer">my time (UTC+3)</div>
     <script>
         const windowElement = document.getElementById("window");
         const titleBar = document.getElementById("title-bar");
         const footer = document.getElementById("footer");
+        const startButton = document.getElementById("start-button");
+        const startMenu = document.getElementById("start-menu");
+        const contentElement = document.getElementById('content');
         let isDragging = false;
         let offsetX, offsetY;
-
+        const messages = [
+        "You pressed F! Every time text be changed.",
+        "Welcome to my site! Stay tuned for updates.",
+        "Thank you for visiting! Have a great day!",
+        "meowwwwwww mEoww"
+        ];
+        let currentMessageIndex = 0;
         const startX = window.innerWidth / 2 - 200;
         const startY = window.innerHeight / 2 - 100;
         windowElement.style.left = `${startX}px`;
@@ -168,11 +263,17 @@
                     windowElement.style.left = `${startX}px`;
                     windowElement.style.top = `${startY}px`;
                     windowElement.style.transform = "scale(1)";
-                }, 200);
+                    currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+                    contentElement.textContent = messages[currentMessageIndex];
+                }, 100);
+                
+            }
+            if (e.key === "ч" || e.key.toLowerCase() === "x") {
+                toggleStartMenu();
             }
         });
 
-        const backgrounds = ["img/1.png", "img/2.png", "img/3.png", "img/4.png"];
+        const backgrounds = ["img/1.png", "img/2.png", "img/3.png", "img/4.png", "img/5.png", "img/6.png", "img/7.png"];
         const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
         document.body.style.background = `url('${randomBg}') no-repeat center center/cover`;
 
@@ -185,6 +286,23 @@
 
         setInterval(updateTime, 1000);
         updateTime();
+
+        startButton.addEventListener("click", () => {
+            toggleStartMenu();
+        });
+
+        function toggleStartMenu() {
+            if (startMenu.style.display === "none" || startMenu.style.display === "") {
+                startMenu.style.display = "block";
+                startButton.classList.add("bounce");
+            } else {
+                startButton.classList.remove("bounce");
+                setTimeout(() => {
+                    startMenu.style.display = "none";
+                }, 300);
+            }
+        }
+
     </script>
 </body>
 </html>
