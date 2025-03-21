@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BelkaPRO - Website</title>
+    <link rel="icon" type="img/icon" href="/img/icon.png">
+    <title>BelkaPRO - Web</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,6 +21,10 @@
         </div>
     </div>
     <div class="desktop">
+        <div class="file" id="recycle-bin">
+            <img src="img/rb.png" alt="Recycle Bin" class="file-icon">
+            <p class="file-name">Recycle Bin</p>
+        </div>
         <div class="file" id="file-icon">
             <img src="img/tf.png" alt="File" class="file-icon">
             <p class="file-name">ReadME.txt</p>
@@ -36,11 +41,29 @@
         <audio id="logonSound" src="aud/Logon.mp3"></audio>
         <script src="script.js"></script>
     </div>
+    <div id="explorerWindow" class="window">
+        <div class="title-bar">
+            <div class="buttons">
+                <div class="btn red" id="closeButton"></div>
+                <div class="btn yellow"></div>
+                <div class="btn green"></div>
+            </div>
+            <span style="color: white; margin-left: auto; margin-right: 10px;">Explorer - [IN DEVELOPMENT!]</span>
+        </div>
+        <div class="content">
+            <ul>
+                <li>Documents</li>
+                <li>Images</li>
+                <li>Music</li>
+                <li>Video</li>
+            </ul>
+        </div>
+    </div>
     <div class="taskbar">
         <div class="start-button" id="start-button"></div>
-        <div class="app-icon">📁</div>
-        <div class="app-icon">⚙️</div>
-        <div class="app-icon">🌐</div>
+        <div class="app-icon" id="exp-lorer">📁</div>
+        <div class="app-icon" id="setting">⚙️</div>
+        <div class="app-icon" id="browser">🌐</div>
         <div class="language-label">ENG</div>
     </div>
     <div class="start-menu" id="start-menu">
@@ -49,9 +72,9 @@
             <div class="user-name">User</div>
         </div>
         <div class="divider"></div>
-        <div class="menu-item">Programs</div>
-        <div class="menu-item">Settings</div>
-        <div class="menu-item">Log Out</div>
+        <div class="menu-item" id="programs">Programs</div>
+        <div class="menu-item" id="settings">Settings</div>
+        <div class="menu-item" id="logout">Log Out</div>
     </div>
     <div class="footer" id="footer">my time (UTC+3)</div>
     <script>
@@ -64,6 +87,10 @@
         const screenLock = document.getElementById("screen-lock");
         const fileIcon = document.getElementById('file-icon');
         const btnRed = document.querySelector('.btn.red');
+        const blackScreen = document.createElement('div');
+        const overlay = document.getElementById('overlay');
+        const logoffSound = new Audio('aud/c.mp3');
+        const exp = document.getElementById('exp-lorer');
         let isDragging = false;
         let offsetX, offsetY;
         let lastKeyPressTime = 0;
@@ -73,13 +100,17 @@
         "Welcome to my site! Stay tuned for updates.",
         "Thank you for visiting! Have a great day!",
         "meowwwwwww mEoww",
-        "This site have some secrets!"
+        "This site have some secrets!",
+        "Press 'logout' button in start menu for changing wallpaper!",
+        "I like github!"
         ];
         let currentMessageIndex = 0;
         const startX = window.innerWidth / 2 - 200;
         const startY = window.innerHeight / 2 - 100;
         windowElement.style.left = `${startX}px`;
         windowElement.style.top = `${startY}px`;
+        explorerWindow.style.left = `${startX}px`;
+        explorerWindow.style.top = `${startY}px`;
 
         titleBar.addEventListener("mousedown", (e) => {
             isDragging = true;
@@ -129,8 +160,11 @@
     });
 
         const backgrounds = ["img/1.png", "img/2.png", "img/3.png", "img/4.png", "img/5.png", "img/6.png", "img/7.png"];
-        const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-        document.body.style.background = `url('${randomBg}') no-repeat center center/cover`;
+        function changeWallpaper() {
+            const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+            document.body.style.background = `url('${randomBg}') no-repeat center center/cover`;
+        }
+        changeWallpaper();
 
         function updateTime() {
             const now = new Date();
@@ -175,6 +209,60 @@
                 windowElement.style.display = 'none';
                 windowElement.style.transform = "scale(1)";
             }, 500);
+        });
+        document.getElementById('settings').addEventListener('click', () => {
+            logoffSound.play();
+        });
+        document.getElementById('programs').addEventListener('click', () => {
+            logoffSound.play();
+        });
+        document.getElementById('logout').addEventListener('click', () => {
+            blackScreen.style.position = 'fixed';
+            blackScreen.style.top = '0';
+            blackScreen.style.left = '0';
+            blackScreen.style.width = '100%';
+            blackScreen.style.height = '100%';
+            blackScreen.style.backgroundColor = 'black';
+            blackScreen.style.opacity = '0';
+            blackScreen.style.transition = 'opacity 0.1s';
+            document.body.appendChild(blackScreen);
+            setTimeout(() => {
+                blackScreen.style.opacity = '1';
+                logoffSound.play();
+                changeWallpaper();
+                setTimeout(() => {
+                    blackScreen.style.opacity = '0';
+                }, 200);
+            }, 100);
+            blackScreen.style.transition = 'opacity 0.2s';
+            blackScreen.style.opacity = 0;
+            setTimeout(() => {
+            document.body.removeChild(blackScreen);
+                setTimeout(() => {
+                    document.body.removeChild(blackScreen);
+                    windowElement.classList.add('show');
+                }, 100);
+            }, 600);
+        });
+
+        document.getElementById('closeButton').addEventListener('click', () => {
+            explorerWindow.style.transition = 'opacity 0.5s, transform 0.5s';
+            explorerWindow.style.transform = "scale(1.2)";
+            explorerWindow.style.opacity = '0';
+            setTimeout(() => {
+                explorerWindow.style.display = 'none';
+                explorerWindow.style.transform = "scale(1)";
+            }, 500);
+        });
+        exp.addEventListener('click', () => {
+            explorerWindow.style.display = 'block';
+            explorerWindow.style.opacity = '0';
+            explorerWindow.style.transform = "scale(1.2)";
+            setTimeout(() => {
+                explorerWindow.style.transition = 'opacity 0.5s, transform 0.5s';
+                explorerWindow.style.opacity = '1';
+                explorerWindow.style.transform = "scale(1)";
+            }, 10);
         });
     </script>
 </body>
