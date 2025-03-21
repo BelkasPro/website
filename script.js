@@ -3,7 +3,9 @@ window.onload = function() {
     const logonSound = new Audio('aud/Logon.mp3');
     const blackScreen = document.createElement('div');
     const windowElement = document.getElementById('window');
+    const explorerElement = document.getElementById('explorerWindow');
     windowElement.style.display = 'none';
+    explorerElement.style.display = 'none';
 
     blackScreen.style.position = 'fixed';
     blackScreen.style.top = '0';
