@@ -4,8 +4,10 @@ window.onload = function() {
     const blackScreen = document.createElement('div');
     const windowElement = document.getElementById('window');
     const explorerElement = document.getElementById('explorerWindow');
+    const settingElement = document.getElementById('settingWindow');
     windowElement.style.display = 'none';
     explorerElement.style.display = 'none';
+    settingElement.style.display = 'none';
 
     blackScreen.style.position = 'fixed';
     blackScreen.style.top = '0';
