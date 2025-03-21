@@ -15,6 +15,7 @@
                 <div class="btn yellow"></div>
                 <div class="btn green"></div>
             </div>
+            <span style="color :white; margin-left: auto; margin-right: 10px;">ReadME.txt</span>
         </div>
         <div class="content" id="content">
             Hello user, I see that you have visited my site. It is empty for now, but I will update it in the future. Good luck.
@@ -41,7 +42,7 @@
         <audio id="logonSound" src="aud/Logon.mp3"></audio>
         <script src="script.js"></script>
     </div>
-    <div id="explorerWindow" class="window">
+    <div id="explorerWindow" class="explorerw">
         <div class="title-bar">
             <div class="buttons">
                 <div class="btn red" id="closeButton"></div>
@@ -59,10 +60,26 @@
             </ul>
         </div>
     </div>
+    <div id="settingWindow" class="settingw">
+        <div class="title-bar">
+            <div class="buttons">
+                <div class="btn red" id="clsBtn"></div>
+                <div class="btn yellow"></div>
+                <div class="btn green"></div>
+            </div>
+            <span style="color: white; margin-left: auto; margin-right: 10px;">Settings</span>
+        </div>
+        <div class="userpng">
+            <div class="png-avatar"></div>
+        </div>
+        <div class="content">
+            Well, there's no settings page, but you can see konata izumi :3
+        </div>
+    </div>
     <div class="taskbar">
         <div class="start-button" id="start-button"></div>
         <div class="app-icon" id="exp-lorer">📁</div>
-        <div class="app-icon" id="setting">⚙️</div>
+        <div class="app-icon" id="settwing">⚙️</div>
         <div class="app-icon" id="browser">🌐</div>
         <div class="language-label">ENG</div>
     </div>
@@ -91,6 +108,7 @@
         const overlay = document.getElementById('overlay');
         const logoffSound = new Audio('aud/c.mp3');
         const exp = document.getElementById('exp-lorer');
+        const ste = document.getElementById('settwing');
         let isDragging = false;
         let offsetX, offsetY;
         let lastKeyPressTime = 0;
@@ -111,11 +129,17 @@
         windowElement.style.top = `${startY}px`;
         explorerWindow.style.left = `${startX}px`;
         explorerWindow.style.top = `${startY}px`;
+        settingWindow.style.left = `${startX}px`;
+        settingWindow.style.top = `${startY}px`;
 
         titleBar.addEventListener("mousedown", (e) => {
             isDragging = true;
             offsetX = e.clientX - windowElement.offsetLeft;
             offsetY = e.clientY - windowElement.offsetTop;
+            offsetX = e.clientX - explorerWindow.offsetLeft;
+            offsetY = e.clientY - explorerWindow.offsetTop;
+            offsetX = e.clientX - settingWindow.offsetLeft;
+            offsetY = e.clientY - settingWindow.offsetTop;
             document.addEventListener("mousemove", onMouseMove);
         });
 
@@ -131,6 +155,10 @@
 
                 windowElement.style.left = `${newX}px`;
                 windowElement.style.top = `${newY}px`;
+                explorerWindow.style.left = `${newX}px`;
+                explorerWindow.style.top = `${newY}px`;
+                settingWindow.style.left = `${newX}px`;
+                settingWindow.style.top = `${newY}px`;
             }
         }
 
@@ -262,6 +290,25 @@
                 explorerWindow.style.transition = 'opacity 0.5s, transform 0.5s';
                 explorerWindow.style.opacity = '1';
                 explorerWindow.style.transform = "scale(1)";
+            }, 10);
+        });
+        document.getElementById('clsBtn').addEventListener('click', () => {
+            settingWindow.style.transition = 'opacity 0.5s, transform 0.5s';
+            settingWindow.style.transform = "scale(1.2)";
+            settingWindow.style.opacity = '0';
+            setTimeout(() => {
+                settingWindow.style.display = 'none';
+                settingWindow.style.transform = "scale(1)";
+            }, 500);
+        });
+        ste.addEventListener('click', () => {
+            settingWindow.style.display = 'block';
+            settingWindow.style.opacity = '0';
+            settingWindow.style.transform = "scale(1.2)";
+            setTimeout(() => {
+                settingWindow.style.transition = 'opacity 0.5s, transform 0.5s';
+                settingWindow.style.opacity = '1';
+                settingWindow.style.transform = "scale(1)";
             }, 10);
         });
     </script>
