@@ -325,3 +325,35 @@ body::after {
 .content li:hover {
     background-color: #333;
 }
+.png-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 20%;
+    background: url('img/png.png') no-repeat center center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+.explorerw {
+    width: 400px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+    transition: transform 0.3s ease-out;
+}
+.settingw {
+    width: 400px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+    transition: transform 0.3s ease-out;
+}
