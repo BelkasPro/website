@@ -78,9 +78,9 @@
     </div>
     <div class="taskbar">
         <div class="start-button" id="start-button"></div>
-        <div class="app-icon" id="exp-lorer">📁</div>
+        <div class="app-icon" id="expwlorer">📁</div>
         <div class="app-icon" id="settwing">⚙️</div>
-        <div class="app-icon" id="browser">🌐</div>
+        <div class="app-icon" id="browserw">🌐</div>
         <div class="language-label">ENG</div>
     </div>
     <div class="start-menu" id="start-menu">
@@ -89,9 +89,8 @@
             <div class="user-name">User</div>
         </div>
         <div class="divider"></div>
-        <div class="menu-item" id="programs">Programs</div>
-        <div class="menu-item" id="settings">Settings</div>
-        <div class="menu-item" id="logout">Log Out</div>
+        <div class="menu-item" id="settingw">Settings</div>
+        <div class="menu-item" id="logoutw">Log Out</div>
     </div>
     <div class="footer" id="footer">my time (UTC+3)</div>
     <script>
@@ -107,7 +106,7 @@
         const blackScreen = document.createElement('div');
         const overlay = document.getElementById('overlay');
         const logoffSound = new Audio('aud/c.mp3');
-        const exp = document.getElementById('exp-lorer');
+        const exp = document.getElementById('expwlorer');
         const ste = document.getElementById('settwing');
         let isDragging = false;
         let offsetX, offsetY;
@@ -127,19 +126,11 @@
         const startY = window.innerHeight / 2 - 100;
         windowElement.style.left = `${startX}px`;
         windowElement.style.top = `${startY}px`;
-        explorerWindow.style.left = `${startX}px`;
-        explorerWindow.style.top = `${startY}px`;
-        settingWindow.style.left = `${startX}px`;
-        settingWindow.style.top = `${startY}px`;
 
         titleBar.addEventListener("mousedown", (e) => {
             isDragging = true;
             offsetX = e.clientX - windowElement.offsetLeft;
             offsetY = e.clientY - windowElement.offsetTop;
-            offsetX = e.clientX - explorerWindow.offsetLeft;
-            offsetY = e.clientY - explorerWindow.offsetTop;
-            offsetX = e.clientX - settingWindow.offsetLeft;
-            offsetY = e.clientY - settingWindow.offsetTop;
             document.addEventListener("mousemove", onMouseMove);
         });
 
@@ -155,10 +146,6 @@
 
                 windowElement.style.left = `${newX}px`;
                 windowElement.style.top = `${newY}px`;
-                explorerWindow.style.left = `${newX}px`;
-                explorerWindow.style.top = `${newY}px`;
-                settingWindow.style.left = `${newX}px`;
-                settingWindow.style.top = `${newY}px`;
             }
         }
 
@@ -211,6 +198,7 @@
         function toggleStartMenu() {
             if (startMenu.style.display === "none" || startMenu.style.display === "") {
                 startMenu.style.display = "block";
+                logoffSound.play();
                 startButton.classList.add("bounce");
             } else {
                 startButton.classList.remove("bounce");
@@ -221,6 +209,7 @@
         }
         fileIcon.addEventListener('dblclick', () => {
             windowElement.style.display = 'block';
+            logoffSound.play();
             windowElement.style.opacity = '0';
             windowElement.style.transform = "scale(1.2)";
             setTimeout(() => {
@@ -233,18 +222,41 @@
             windowElement.style.transition = 'opacity 0.5s, transform 0.5s';
             windowElement.style.transform = "scale(1.2)";
             windowElement.style.opacity = '0';
+            logoffSound.play();
             setTimeout(() => {
                 windowElement.style.display = 'none';
                 windowElement.style.transform = "scale(1)";
             }, 500);
         });
-        document.getElementById('settings').addEventListener('click', () => {
+        document.getElementById('settwing').addEventListener('click', () => {
+            logoffSound.play();
+            settingWindow.style.display = 'block';
+            settingWindow.style.opacity = '0';
+            settingWindow.style.transform = "scale(1.2)";
+            setTimeout(() => {
+                settingWindow.style.transition = 'opacity 0.5s, transform 0.5s';
+                settingWindow.style.opacity = '1';
+                settingWindow.style.transform = "scale(1)";
+            }, 10);
+        });
+        document.getElementById('settingw').addEventListener('click', () => {
+            logoffSound.play();
+            settingWindow.style.display = 'block';
+            settingWindow.style.opacity = '0';
+            settingWindow.style.transform = "scale(1.2)";
+            setTimeout(() => {
+                settingWindow.style.transition = 'opacity 0.5s, transform 0.5s';
+                settingWindow.style.opacity = '1';
+                settingWindow.style.transform = "scale(1)";
+            }, 10);
+        });
+        document.getElementById('expwlorer').addEventListener('click', () => {
             logoffSound.play();
         });
-        document.getElementById('programs').addEventListener('click', () => {
+        document.getElementById('browserw').addEventListener('click', () => {
             logoffSound.play();
         });
-        document.getElementById('logout').addEventListener('click', () => {
+        document.getElementById('logoutw').addEventListener('click', () => {
             blackScreen.style.position = 'fixed';
             blackScreen.style.top = '0';
             blackScreen.style.left = '0';
@@ -276,6 +288,7 @@
         document.getElementById('closeButton').addEventListener('click', () => {
             explorerWindow.style.transition = 'opacity 0.5s, transform 0.5s';
             explorerWindow.style.transform = "scale(1.2)";
+            logoffSound.play();
             explorerWindow.style.opacity = '0';
             setTimeout(() => {
                 explorerWindow.style.display = 'none';
@@ -294,6 +307,7 @@
         });
         document.getElementById('clsBtn').addEventListener('click', () => {
             settingWindow.style.transition = 'opacity 0.5s, transform 0.5s';
+            logoffSound.play();
             settingWindow.style.transform = "scale(1.2)";
             settingWindow.style.opacity = '0';
             setTimeout(() => {
@@ -303,6 +317,7 @@
         });
         ste.addEventListener('click', () => {
             settingWindow.style.display = 'block';
+            logoffSound.play();
             settingWindow.style.opacity = '0';
             settingWindow.style.transform = "scale(1.2)";
             setTimeout(() => {
